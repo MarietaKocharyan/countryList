@@ -1,5 +1,4 @@
 import {useState, useEffect} from 'react';
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import CheckIcon from '@mui/icons-material/Check';
 import {
@@ -17,32 +16,20 @@ import {
 } from 'react-router-dom';
 
 
-import ListenByLaungage from './byLagunage'
-
-
-const ListOfCountries = () => {
+const ListenByLaungage = ({lang}) => {
 
     const [list, setList] = useState([]);
     const [sortType, setSortType] = useState('');
 
-    const routes = {
-      '/': () => <ListenByLaungage />
-    };
-  
-
-    const url = 'https://restcountries.com/v3.1/all';
+    const urlForLang = `https://restcountries.com/v3.1/lang/${lang}`;
 
     useEffect(() => {
-      fetch(url)
+      fetch(urlForLang)
       .then(response => response.json())
       .then(data => setList(data))
       .catch(error => console.log("Something is wrong" + error))
     }, []);
 
-    const handelClick = () => {
-      const navigate = useNavigate;
-      navigate('/')
-    }
 
     return (
       <>
@@ -70,11 +57,11 @@ const ListOfCountries = () => {
               </TableRow>
             </TableHead>
             <TableBody >
-              {list.map(({altSpellings, area, timezones, flag,unMember , capital, languages, id})=> 
-                <TableRow key={id}
+              {list.map(({altSpellings, area, timezones, flag,unMember , capital,fifa})=> 
+                <TableRow
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row" scope="row" onClick={handelClick}>
+                  <TableCell component="th" scope="row" scope="row" >
                     {altSpellings[1]}
                   </TableCell>
                   <TableCell align="right">{capital}</TableCell>
@@ -96,4 +83,4 @@ const ListOfCountries = () => {
 };
 
 
-export default ListOfCountries;
+export default ListenByLaungage;
