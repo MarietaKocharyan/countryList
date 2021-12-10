@@ -6,18 +6,15 @@ import Button from '@mui/material/Button';
 
 const Hedaer = () => {
     return (
-        <Box sx={{ p: 3, textAlign: 'center', color: 'blue'}}>
-    <AppBar position="static">
-        <Toolbar variant="dense">
-          <Typography variant="h6" color="inherit" sx={{textAlign: 'center'}}>
-            List of countries
-          </Typography>
-        </Toolbar>
-
-      </AppBar>     
-     
-      
-         </Box>
+      <Box sx={{ p: 3, textAlign: 'center', color: 'blue'}}>
+        <AppBar position="static">
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit" sx={{textAlign: 'center'}}>
+              List of countries
+            </Typography>
+          </Toolbar>
+        </AppBar>     
+      </Box>
     )};
 
 export default Hedaer;
