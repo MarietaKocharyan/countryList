@@ -8,20 +8,16 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import CheckIcon from '@mui/icons-material/Check';
-import {
-  useNavigate
-} from 'react-router-dom';
 
 
 const ListenByLaungage = ({lang}) => {
 
     const [list, setList] = useState([]);
-    const [sortType, setSortType] = useState('');
 
-    const urlForLang = `https://restcountries.com/v3.1/lang/${lang}`;
+    const urlForLang = 'https://restcountries.com/v3.1/lang/spa';
 
     useEffect(() => {
       fetch(urlForLang)
@@ -33,17 +29,6 @@ const ListenByLaungage = ({lang}) => {
 
     return (
       <>
-      <Box sx={{ Width: 120 }}>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value="Sort by"
-          label="Sort"
-          onChange={(e) => setSortType(e.target.value)}  >
-            <MenuItem value={'Country'}>Country</MenuItem>
-          <MenuItem value={'Capital'}>Capital</MenuItem>
-            </Select>
-      </Box>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>

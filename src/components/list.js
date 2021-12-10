@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,6 +16,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import {
   useNavigate
 } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 
 
 import ListenByLaungage from './byLagunage'
@@ -25,13 +28,7 @@ const ListOfCountries = () => {
     const [list, setList] = useState([]);
     const [sortType, setSortType] = useState('');
 
-    const routes = {
-      '/': () => <ListenByLaungage />
-    };
-  
-
     const url = 'https://restcountries.com/v3.1/all';
-
     useEffect(() => {
       fetch(url)
       .then(response => response.json())
@@ -39,10 +36,11 @@ const ListOfCountries = () => {
       .catch(error => console.log("Something is wrong" + error))
     }, []);
 
-    const handelClick = () => {
-      const navigate = useNavigate;
-      navigate('/')
-    }
+    // function handleClick() {
+    //   history.push("/byLang");
+    // }
+
+    let history;
 
     return (
       <>
@@ -54,8 +52,8 @@ const ListOfCountries = () => {
           label="Sort"
           onChange={(e) => setSortType(e.target.value)}  >
             <MenuItem value={'Country'}>Country</MenuItem>
-          <MenuItem value={'Capital'}>Capital</MenuItem>
-            </Select>
+            <MenuItem value={'Capital'}>Capital</MenuItem>
+          </Select>
       </Box>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -71,12 +69,22 @@ const ListOfCountries = () => {
             </TableHead>
             <TableBody >
               {list.map(({altSpellings, area, timezones, flag,unMember , capital, languages, id})=> 
+              <>
                 <TableRow key={id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row" scope="row" onClick={handelClick}>
-                    {altSpellings[1]}
+                >  
+                <Router>
+                  <TableCell component="th" scope="row" scope="row">
+                  <Link to="/byLang"> {altSpellings[1]}</Link>
                   </TableCell>
+                  <Switch>
+                    <Route
+                      exact
+                      path="/byLang"
+                      component={<ListenByLaungage />}
+                    />
+                  </Switch>
+                  </Router>
                   <TableCell align="right">{capital}</TableCell>
                   <TableCell align="right">{area}</TableCell>
                   <TableCell align="right">
@@ -87,13 +95,16 @@ const ListOfCountries = () => {
                   </TableCell>
                   <TableCell align="right">{timezones}</TableCell>
                 </TableRow>
+                </>
             )}
             </TableBody>
           </Table>
         </TableContainer>
+       
         </>
       );
 };
 
 
 export default ListOfCountries;
+
